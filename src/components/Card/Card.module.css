@@ -1,21 +1,21 @@
 .box {
-  background-color: rgb(28, 28, 28);
+  background-color: #121212;
   display: flex;
-  height: 300px;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 0px;
-  border: 1px solid #4d4d4d;
-  border-radius: 5px;
-  width: 230px;
-  transition: 500ms;
-  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  width: 220px;
+  min-height: 400px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .box:hover {
-  background-color: rgb(39, 39, 39);
-  transition: 500ms;
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border-color: var(--color-purple-light);
 }
 
 .box h1 {
@@ -34,52 +34,119 @@
   margin-top: auto;
 }
 
-.image {
-  border-radius: 5px;
+.imagecontainer {
+  position: relative;
   width: 100%;
-  height: auto;
+  height: 300px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.box:hover .image {
+  transform: scale(1.1);
 }
 
 .name {
-  color: rgb(189, 189, 189);
-  text-overflow: ellipsis;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 10px 10px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.95));
+  color: var(--color-gray-light) !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  margin: 0 !important;
+  text-align: left;
 }
 
-.price {
-  color: rgb(189, 189, 189);
-  margin-top: -5px;
-  margin-bottom: -5px;
+.premiumBadge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--color-purple-light);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-.button{
-    background-color: #c8a74b;
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 5px;
-    width: 135px;
-  
+.favoriteIcon {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
+
+.favoriteIcon:hover {
+  transform: scale(1.15);
+}
+
+.buttoncontainer {
+  display: flex;
+  flex-direction: row; /* Align star and button horizontally */
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 10px 15px 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button {
+  background: linear-gradient(
+    135deg,
+    var(--color-purple-dark) 0%,
+    var(--color-purple-light) 100%
+  );
+  color: #fff;
+  font-weight: 700;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 12px;
+  text-transform: uppercase;
+  transition: filter 0.3s;
+}
+
 .button:hover {
-  background-color: #c69510;
+  filter: brightness(1.2);
 }
 
-.buttonadd{
-    background-color: #4caf50;
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 20px;
-    width: 135px;
-  
+.buttonadd {
+  background: linear-gradient(
+    135deg,
+    var(--color-purple-light) 0%,
+    var(--color-purple-dark) 100%
+  );
+  color: #fff;
+  font-weight: 700;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 12px;
+  text-transform: uppercase;
+  transition: filter 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .buttonadd:hover {
-  background-color: #45a049;
+  filter: brightness(1.2);
 }
 
 .botonBorrar {

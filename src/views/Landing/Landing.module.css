@@ -5,11 +5,13 @@
 
 .container {
   position: relative;
-  height: 90.5vh;
+  min-height: 85vh; /* Account for the footer */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 2rem;
+  text-align: center;
 }
 
 .container::before {
@@ -20,57 +22,86 @@
   right: 0;
   bottom: 0;
   z-index: -1;
-  background-image: url("https://media.istockphoto.com/id/1334436084/es/foto/vista-de-arriba-hacia-abajo-de-coloridos-accesorios-de-juego-iluminados-sobre-la-mesa.jpg?s=612x612&w=0&k=20&c=fcCloH-zF7rFZzUYq6-jFpbEuq5DiipnHX5ZZWHRThE=");
-  filter: blur(5px);
+  background-image: url("../../assets/AnimeZoneLogoBackground.png");
+  filter: blur(5px) brightness(0.6);
   background-size: cover;
   background-position: center;
 }
+
 .logo {
-  width: 600px;
+  width: 250px; /* Reduced as requested */
   height: auto;
-  margin-bottom: 1rem;
-  animation: animarImagen 2s ease-in-out ; /* Aplica la animación */
+  margin-bottom: 1.5rem;
+  animation: animarImagen 2s ease-in-out;
 }
 
 @keyframes animarImagen {
-  0% { transform: scale(0.5); } /* Estado inicial */
-  50% { transform: scale(1); } /* Escala al 110% a la mitad de la animación */
-  100% { transform: scale(1); } /* Vuelve al estado inicial */
-}
-
-  .enlarged {
-    width: 900px; 
-    height: auto; 
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
   }
-  
-
-
-  .button{
-    background-color: transparent;
-    color: #eef449;
-    font-size: 4rem;
-    padding: 0;
-    border: none;
-    cursor: pointer;
-    font-family: "Higher";
-    transition: color 0.2s;
-    font-weight: bold;
-    transition: 500ms;
-}
-.button:hover{
-  font-size: 6rem;
-  transition: 500ms;
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-.heading {
-    color: white;
+.button {
+  background-color: transparent;
+  color: var(--color-purple-light, #eef449);
+  font-size: 3.5rem;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  font-family: "Higher";
+  transition: all 0.5s;
+  font-weight: bold;
+}
+
+.button:hover {
+  font-size: 4.5rem;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.subHeading {
+  color: #dbdbdb;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 700px;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 2.5rem;
+  border-radius: 15px;
+  margin-top: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+@media (max-width: 768px) {
+  .button {
+    font-size: 2.5rem;
+  }
+
+  .button:hover {
     font-size: 3rem;
-    
   }
 
-  .subHeading{
-    color: rgb(224, 220, 220);
-    font-size: 30px;
-    background-color: rgba(0, 0, 0, 0.75);
-    border-radius: 10px;
+  .subHeading {
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
   }
+
+  .logo {
+    width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .button {
+    font-size: 2rem;
+  }
+
+  .subHeading {
+    font-size: 0.9rem;
+  }
+}

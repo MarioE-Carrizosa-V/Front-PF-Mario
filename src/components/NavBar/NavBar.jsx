@@ -1,5 +1,3 @@
-
-
 // import React, { useState, useEffect } from "react";
 // import style from "./NavBar.module.css";
 // import { Link, useHistory } from "react-router-dom";
@@ -131,7 +129,7 @@
 //               toast.addEventListener('mouseleave', Swal.resumeTimer)
 //             }
 //         })
-          
+
 //         Toast.fire({
 //             icon: 'success',
 //             title: 'Closed session'
@@ -247,183 +245,199 @@
 
 // export default NavBar;
 
-
-
-
 import React, { useState, useEffect } from "react";
 import style from "./NavBar.module.css";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import logoImage from "../../assets/LOGOGAMEZONE2.png";
-// import usuario from "../../assets/usuario.png";
-import { logoutUser, getDataGoogle, logoutGoogle } from "../../redux/actions";
+import logoImage from "../../assets/AnimeZoneLogo.png";
+import usuario from "../../assets/usuario.png";
+import {
+  logoutUser,
+  getDataGoogle,
+  logoutGoogle,
+  getAnimeSearch,
+} from "../../redux/actions";
 // import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 
 const NavBar = () => {
+  const cart = useSelector((state) => state.cart);
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const [isNavbarFixed, setIsNavbarFixed] = useState(false);
+  const [carItem, setCarItem] = useState(0);
 
-    const cart = useSelector(state => state.cart)
-    const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
-    const [isNavbarFixed, setIsNavbarFixed] = useState(false);
-    const [carItem, setCarItem] = useState(0);
+  const handleSubMenuToggle = () => {
+    setIsSubMenuOpen(!isSubMenuOpen);
+  };
 
-    const handleSubMenuToggle = () => {
-        setIsSubMenuOpen(!isSubMenuOpen);
+  useEffect(() => {
+    const handleScroll = () => {
+      const isFixed = window.pageYOffset > 0;
+      setIsNavbarFixed(isFixed);
     };
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const isFixed = window.pageYOffset > 0;
-            setIsNavbarFixed(isFixed);
-        };
+    window.addEventListener("scroll", handleScroll);
 
-        window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-    const history = useHistory()
-    const dispatch = useDispatch()
+  const usuario = useSelector((state) => state.user);
 
-    const usuario = useSelector((state) => state.user)
+  const [conteo, setConteo] = useState(0);
+  const [conteoTwo, setConteoTwo] = useState(0);
+  console.log(setConteoTwo);
 
-    const [ conteo, setConteo ] = useState(0)
-    const [ conteoTwo, setConteoTwo ] = useState(0)
-console.log(setConteoTwo)
+  console.log(conteoTwo, "esto es de google");
 
-    console.log(conteoTwo, "esto es de google")
+  console.log(conteo);
 
-    console.log(conteo)
+  useEffect(() => {
+    //validateData()
 
-    useEffect(() => {
-        //validateData()
-
-        if (usuario) {
-            localStorage.setItem("user", JSON.stringify(usuario));
-            setConteo(1)
-        }else{
-            setConteo(0)
-        }
-
-    }, [usuario])
-
-    const datosUser = JSON.parse(localStorage.getItem("user"));
-
-    console.log(datosUser, "datos del local")
-
-    useEffect(() => {
-
-        if (datosUser) {
-            setConteo(1)
-        }else{
-            setConteo(0)
-        }
-        
-    }, [datosUser])
-
-    const removerDatos = async () => {
-
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-
-        Toast.fire({
-            icon: 'success',
-            title: 'Closed session'
-        })
-
-        await localStorage.removeItem("user");
-        //await Cookies.remove("token")
-        await dispatch(logoutUser())
-        await dispatch(logoutGoogle())
-
-        history.push("/")
-
-        console.log("datos removidos")
+    if (usuario) {
+      localStorage.setItem("user", JSON.stringify(usuario));
+      setConteo(1);
+    } else {
+      setConteo(0);
     }
+  }, [usuario]);
 
-    function peticionData() {
-        dispatch(getDataGoogle())
-        console.log("peticones de datos")
+  const datosUser = JSON.parse(localStorage.getItem("user"));
+
+  console.log(datosUser, "datos del local");
+
+  useEffect(() => {
+    if (datosUser) {
+      setConteo(1);
+    } else {
+      setConteo(0);
     }
+  }, [datosUser]);
 
-    useEffect(() => {
-        if (datosUser) {
-            console.log("hay datos")
-        }else{
-            peticionData()
-        }
+  const removerDatos = async () => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
 
-    }, [dispatch])
+    Toast.fire({
+      icon: "success",
+      title: "Closed session",
+    });
 
-    useEffect(() => {
-        setCarItem(cart.length);
-    }, [cart]);
+    await localStorage.removeItem("user");
+    //await Cookies.remove("token")
+    await dispatch(logoutUser());
+    await dispatch(logoutGoogle());
 
-    return (
-        <div className={`custom-navbar ${isNavbarFixed ? style.fixedNavbar : ""}`}>
-            <Link to="/home">
-                <img className={style.img} src={logoImage} width="300px" alt="Logo" />
-            </Link>
-            <ul className={style.NaV}>
-                <li className={style["submenu-item"]}>
-                    <Link to="/home" className={style["submenu-link"]}>
-                        <i className={`fa fa-home ${style["cart_icon"]}`}></i>
-                    </Link>
-                </li>
-                <li className={style["submenu__item"]}>
-                    <Link to="/cart" className={style["submenu_link"]}>
-                        {carItem > 0 && <div className={style["cart_count"]}>{carItem}</div>}
-                        <i className={`fa fa-shopping-cart ${style["cart_icon"]}`}></i>
-                    </Link>
-                </li>
+    history.push("/home");
 
-                {conteo > 0 ? (
-                    <li>
-                        <div className={style.usuarioContainer}>
-                            <img
-                                src={datosUser.profileImage}
-                                className={style.usuario}
-                                alt={datosUser.name}
-                                title={datosUser.name}
-                                onClick={handleSubMenuToggle}
-                            />
-                            {isSubMenuOpen && (
-                                <ul className={style.submenu}>
-                                    <li className={style["submenu_item"]}>
-                                        <Link to="#">{datosUser.user_name}</Link>
-                                    </li>
-                                    <li className={style["submenu_item"]}>
-                                        <Link to="/user">Perfil</Link>
-                                    </li>
-                                    <li className={style["submenu_item"]}>
-                                        <Link to="/whishlist">Wish List</Link>
-                                    </li>
-                                    <li className={style["submenu_item"]}>
-                                        <a onClick={removerDatos}>Logout</a>
-                                    </li>
-                                </ul>
-                            )}
-                        </div>
-                    </li>
-                ) : (
-                    <Link to="/login">
-                        <button className={style.login_button}>Login</button>
-                    </Link>
-                )}
-            </ul>
+    console.log("datos removidos");
+  };
+
+  function peticionData() {
+    dispatch(getDataGoogle());
+    console.log("peticones de datos");
+  }
+
+  useEffect(() => {
+    if (datosUser) {
+      console.log("hay datos");
+    } else {
+      peticionData();
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    setCarItem(cart.length);
+  }, [cart]);
+
+  return (
+    <div
+      className={`${style["custom-navbar"]} ${isNavbarFixed ? style.fixedNavbar : ""}`}
+    >
+      <div className={style.logoAndSearch}>
+        <Link to="/home">
+          <img className={style.img} src={logoImage} alt="AnimeZone Logo" />
+        </Link>
+        <div className={style.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search anime..."
+            className={style.searchInput}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                dispatch(getAnimeSearch({ q: e.target.value }));
+                history.push("/search");
+              }
+            }}
+          />
+          <i className={`fa fa-search ${style.searchIcon}`}></i>
         </div>
-    );
+      </div>
+      <ul className={style.NaV}>
+        <li className={style["submenu-item"]}>
+          <Link to="/home" className={style["submenu-link"]}>
+            <i className={`fa fa-home ${style["cart_icon"]}`}></i>
+          </Link>
+        </li>
+        <li className={style["submenu__item"]}>
+          <Link to="/cart" className={style["submenu_link"]}>
+            {carItem > 0 && (
+              <div className={style["cart_count"]}>{carItem}</div>
+            )}
+            <i className={`fa fa-shopping-cart ${style["cart_icon"]}`}></i>
+          </Link>
+        </li>
+
+        {conteo > 0 ? (
+          <li>
+            <div className={style.usuarioContainer}>
+              <img
+                src={datosUser.profileImage || usuario}
+                className={style.usuario}
+                alt={datosUser.name}
+                title={datosUser.name}
+                onClick={handleSubMenuToggle}
+                referrerPolicy="no-referrer"
+              />
+              {isSubMenuOpen && (
+                <ul className={style.submenu}>
+                  <li className={style["submenu_item"]}>
+                    <Link to="/whishlist">Watchlist</Link>
+                  </li>
+                  <li className={style["submenu_item"]}>
+                    <Link to="/user">Suscripcion</Link>
+                  </li>
+                  <li className={style["submenu_item"]}>
+                    <a onClick={removerDatos}>Logout</a>
+                  </li>
+                </ul>
+              )}
+            </div>
+          </li>
+        ) : (
+          <li className={style.NaV_item}>
+            <Link to="/login" className={style.login_link}>
+              <button className={style.login_button}>Login</button>
+            </Link>
+          </li>
+        )}
+      </ul>
+    </div>
+  );
 };
 
-export default NavBar;
+export default NavBar;

@@ -8,6 +8,8 @@
 .principaltitle{
     font-size: 35px;
     color: rgb(255, 251, 247);
+    margin-top: 0px;
+    padding-top: 10px;
 }
 .arrowprev{
     height: 2%;
