@@ -100,15 +100,15 @@ function Dashboard() {
     setRole('user');
   };
 
-  const handleCreateGameClick = () => {
-    setShowForm(true);
-    setShowUserForm(false);
-  };
+  // const handleCreateGameClick = () => {
+  //   setShowForm(true);
+  //   setShowUserForm(false);
+  // };
 
-  const handleCreateUserClick = () => {
-    setShowUserForm(true);
-    setShowForm(false);
-  };
+  // const handleCreateUserClick = () => {
+  //   setShowUserForm(true);
+  //   setShowForm(false);
+  // };
 
   return (
     <html>

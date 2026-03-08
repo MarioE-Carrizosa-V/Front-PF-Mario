@@ -347,18 +347,12 @@ const NavBar = () => {
     console.log("datos removidos");
   };
 
-  function peticionData() {
-    dispatch(getDataGoogle());
-    console.log("peticones de datos");
-  }
-
   useEffect(() => {
-    if (datosUser) {
-      console.log("hay datos");
-    } else {
-      peticionData();
+    if (!datosUser) {
+      dispatch(getDataGoogle());
+      console.log("peticiones de datos");
     }
-  }, [dispatch, datosUser, peticionData]);
+  }, [dispatch, datosUser]);
 
   useEffect(() => {
     setCarItem(cart.length);

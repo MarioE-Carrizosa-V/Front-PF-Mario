@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Carousel.module.css";
 import * as act from "../../redux/actions";
@@ -27,21 +27,26 @@ const Carousel = () => {
   const totalCards =
     gameComingSoon && Math.ceil(gameComingSoon.length / charactersPerPage);
 
-  const handleNextCard = () => {
-    if (currentCard < totalCards) {
-      setCurrentCard(currentCard + 1);
-    } else {
-      setCurrentCard(1); // Vuelve a la primera posición
-    }
-  };
 
-  const handlePrevCard = () => {
-    if (currentCard > 1) {
-      setCurrentCard(currentCard - 1);
+const handleNextCard = useCallback(() => {
+  setCurrentCard((prev) => {
+    if (prev < totalCards) {
+      return prev + 1;
     } else {
-      setCurrentCard(totalCards); // Vuelve a la última posición
+      return 1;
     }
-  };
+  });
+}, [totalCards]);
+
+const handlePrevCard = useCallback(() => {
+  setCurrentCard((prev) => {
+    if (prev > 1) {
+      return prev - 1;
+    } else {
+      return totalCards;
+    }
+  });
+}, [totalCards]);
 
   const handleGoToCard = (cardNumber) => {
     setCurrentCard(cardNumber);
