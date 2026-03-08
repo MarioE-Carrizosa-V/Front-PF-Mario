@@ -36,14 +36,14 @@ const ShoppingCart = () => {
     });
   };
 
-  const handleBuy = async () => {
-    try {
-      //! mandar tanto juegos como el precio total
-      dispatch(act.createOrder(totalPrice, cart, dataUser));
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
+  // const handleBuy = async () => {
+  //   try {
+  //     //! mandar tanto juegos como el precio total
+  //     dispatch(act.createOrder(totalPrice, cart, dataUser));
+  //   } catch (error) {
+  //     console.error(error.message);
+  //   }
+  // };
 
   return (
     <div>

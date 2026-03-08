@@ -12,9 +12,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 // axios.defaults.baseURL = "http://localhost:3001/";
 axios.defaults.baseURL = "https://back-gamezone-y96h.onrender.com/";
 
-const GOOGLE_CLIENT_ID =
-  process.env.REACT_APP_GOOGLE_CLIENT_ID ||
-  "1054056983919-kepuq4m1ethr1n4v2f5146dfq4tg5te8.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
 
 ReactDOM.render(
   <React.StrictMode>

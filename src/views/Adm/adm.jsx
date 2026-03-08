@@ -116,7 +116,7 @@ function Dashboard() {
       <body>
         <div className={styles.area}></div>
         <nav className={styles.main_menu}>
-          <ul>
+          {/* <ul>
             <li>
               <Link to="/home" className={styles.nav_link}>
                 <i className={`fa fa-home ${styles["fa-2x"]}`}></i>
@@ -149,7 +149,7 @@ function Dashboard() {
                 </span>
               </a>
             </li>
-          </ul>
+          </ul> */}
           <ul className="logout">
             <li>
               <Link to="/login">

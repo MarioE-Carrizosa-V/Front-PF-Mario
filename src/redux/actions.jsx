@@ -104,9 +104,9 @@ const mapAnimeFull = (a) => ({
     : [],
 });
 
-const axiosInstance = axios.create({
-  baseURL: ANIME_URL,
-});
+// const axiosInstance = axios.create({
+//   baseURL: ANIME_URL,
+// });
 
 export const resetfilters = () => {
   return {

@@ -250,7 +250,7 @@ import style from "./NavBar.module.css";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import logoImage from "../../assets/AnimeZoneLogo.png";
-import usuario from "../../assets/usuario.png";
+// import usuario from "../../assets/usuario.png";
 import {
   logoutUser,
   getDataGoogle,
@@ -358,7 +358,7 @@ const NavBar = () => {
     } else {
       peticionData();
     }
-  }, [dispatch]);
+  }, [dispatch, datosUser, peticionData]);
 
   useEffect(() => {
     setCarItem(cart.length);
@@ -422,7 +422,7 @@ const NavBar = () => {
                     <Link to="/user">Suscripcion</Link>
                   </li>
                   <li className={style["submenu_item"]}>
-                    <a onClick={removerDatos}>Logout</a>
+                    <div onClick={removerDatos}>Logout</div>
                   </li>
                 </ul>
               )}

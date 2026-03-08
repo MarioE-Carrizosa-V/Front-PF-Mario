@@ -34,7 +34,7 @@ const Search = () => {
         act.getAnimeSearch({ order_by: "popularity", sort: "desc", limit: 20 }),
       );
     }
-  }, [dispatch]);
+  }, [dispatch, search.length]);
 
   const handleFilterChange = (e) => {
     const { name, value, type, checked } = e.target;

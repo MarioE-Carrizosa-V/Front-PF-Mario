@@ -30,10 +30,10 @@ const Profile = (props) => { // Agrega props como parámetro
         <nav className={styles.main_menu}>
           <ul>
             <li>
-              <a href="" onClick={() => setActiveOption("profile")}>
+              <div onClick={() => setActiveOption("profile")}>
                 <i className={`fa fa-home ${styles["fa-2x"]}`}></i>
                 <span className={styles.nav_text}>Profile</span>
-              </a>
+              </div>
             </li>
             <li className="has subnav">
               <a href="/library" onClick={() => setActiveOption("shopping")}>

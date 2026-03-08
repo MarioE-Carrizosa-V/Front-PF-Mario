@@ -57,7 +57,7 @@ const Carousel = () => {
         clearInterval(interval);
       };
     }
-  }, [currentCard, gameComingSoon]);
+  }, [currentCard, gameComingSoon, handleNextCard]);
 
   const indexOfLastCharacter = currentCard * charactersPerPage;
   const indexOfFirstCharacter = indexOfLastCharacter - charactersPerPage;
@@ -94,6 +94,7 @@ const Carousel = () => {
       </div>
       <div className={style.paginado}>
         <img
+          alt="arrowprev"
           className={style.arrowprev}
           src={arrow}
           onClick={handlePrevCard}
@@ -101,6 +102,7 @@ const Carousel = () => {
         />
         {[...Array(totalCards)].map((_, index) => (
           <img
+            alt="punto"
             src={punto}
             className={`${style.punto} ${currentCard === index + 1 ? style.selected : ""}`}
             key={index}
@@ -109,6 +111,7 @@ const Carousel = () => {
           />
         ))}
         <img
+          alt="arrownext"
           className={style.arrownext}
           src={arrow}
           onClick={handleNextCard}
