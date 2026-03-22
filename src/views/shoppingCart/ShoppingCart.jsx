@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as act from "../../redux/actions";
 import { isSubscriptionValid } from "../../utils/subscriptionUtils";
-import Card from "../../components/Card/Card";
 import styles from "./ShoppingCart.module.css";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 
@@ -14,9 +13,11 @@ const ShoppingCart = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const user = useSelector((state) => state.user) || JSON.parse(localStorage.getItem("user")) || {};
+  const usuario = useSelector((state) => state.user);
+  const user = React.useMemo(() => {
+    return usuario || JSON.parse(localStorage.getItem("user")) || {};
+  }, [usuario]);
   const isPremium = isSubscriptionValid(user);
-  const totalPrice = useSelector((state) => state.total);
 
   const [checkoutData, setCheckoutData] = React.useState({
     name: user.name || "",
@@ -39,23 +40,6 @@ const ShoppingCart = () => {
 
   const isCheckoutValid = checkoutData.name && checkoutData.email;
 
-  const handleRemove = () => {
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: "¡No podrás revertir esto!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, ¡eliminar!",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire("¡Eliminado!", "Tu carrito ha sido vaciado.", "success");
-        dispatch(act.clearCart());
-      }
-    });
-  };
 
   if (isPremium) {
     return (

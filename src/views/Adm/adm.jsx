@@ -22,7 +22,7 @@ function Dashboard() {
   const [capsuleImage, setCapsuleImage] = useState('');
   const [developers, setDevelopers] = useState('');
   const [genres, setGenres] = useState('');
-  const [publishers, setPublishers] = useState('');
+  const [, setPublishers] = useState('');
   const [platform, setPlatform] = useState('');
   const [languages, setLanguages] = useState('');
   const [categories, setCategories] = useState('');
@@ -95,22 +95,22 @@ function Dashboard() {
             </Link>
           </li>
           <li>
-            <a href="#" onClick={handleCreateGameClick}>
+            <button className={styles.nav_button} onClick={handleCreateGameClick}>
               <i className={`fa fa-cogs ${styles["fa-2x"]}`}></i>
               <span className={styles.nav_text}>Create Game</span>
-            </a>
+            </button>
           </li>
           <li>
-            <a href="#" onClick={handleCreateUserClick}>
+            <button className={styles.nav_button} onClick={handleCreateUserClick}>
               <i className={`fa fa-user ${styles["fa-2x"]}`}></i>
               <span className={styles.nav_text}>Create User</span>
-            </a>
+            </button>
           </li>
           <li>
-            <a href="#">
+            <button className={styles.nav_button}>
               <i className={`fa fa-shopping-cart ${styles["fa-2x"]}`}></i>
               <span className={styles.nav_text}>Sales</span>
-            </a>
+            </button>
           </li>
         </ul>
         <ul className={styles.logout}>

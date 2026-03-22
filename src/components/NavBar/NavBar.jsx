@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import style from "./NavBar.module.css";
-import { isSubscriptionValid, getPersistentSubscription } from "../../utils/subscriptionUtils";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import usuarioImg from "../../assets/usuario.png";
@@ -15,9 +14,7 @@ import {
   FaHeart, 
   FaShoppingBag, 
   FaSearch, 
-  FaUserCircle 
 } from "react-icons/fa";
-// import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 
 const NavBar = () => {
@@ -48,29 +45,17 @@ const NavBar = () => {
 
   const usuario = useSelector((state) => state.user);
 
-  const [conteo, setConteo] = useState(0);
-
-  useEffect(() => {
-    //validateData()
-
-    if (usuario) {
-      localStorage.setItem("user", JSON.stringify(usuario));
-      setConteo(1);
-    } else {
-      setConteo(0);
-    }
+  const datosUser = useMemo(() => {
+    return usuario || JSON.parse(localStorage.getItem("user"));
   }, [usuario]);
 
-  const datosUser = JSON.parse(localStorage.getItem("user"));
-  const isPremium = isSubscriptionValid(datosUser);
+  const conteo = datosUser && (datosUser.email || datosUser.id) ? 1 : 0;
 
   useEffect(() => {
-    if (datosUser && datosUser.email) {
-      setConteo(1);
-    } else {
-      setConteo(0);
+    if (usuario) {
+      localStorage.setItem("user", JSON.stringify(usuario));
     }
-  }, [datosUser]);
+  }, [usuario]);
 
   const removerDatos = async () => {
     const Toast = Swal.mixin({

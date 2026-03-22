@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearDetail, gameDetail } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import style from "./Detail.module.css";
-import { isSubscriptionValid } from "../../utils/subscriptionUtils";
+// import { isSubscriptionValid } from "../../utils/subscriptionUtils";
 import { PacmanLoader } from "react-spinners";
 import * as act from "../../redux/actions";
 import {
@@ -20,8 +20,8 @@ const Detail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const game = useSelector((state) => state.gameDetail);
-  const user = useSelector((state) => state.user) || JSON.parse(localStorage.getItem("user"));
-  const isPremium = isSubscriptionValid(user);
+  // const user = useSelector((state) => state.user) || JSON.parse(localStorage.getItem("user"));
+  // const isPremium = isSubscriptionValid(user);
   const isLoading = game === undefined || game === null;
   const id = props.match.params.id;
 

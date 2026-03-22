@@ -9,7 +9,6 @@ import Search from "./views/Search/Search"
 import Review from './views/Reviews/Reviews';
 
 import Profile from './views/Profile/Profile';
-import MyGames from './views/MyGames/MyGames';
 import ReviewsModif from './views/Reviews/ReviewsModif';
 
 import ShoppingView from './views/Profile/ProfileViews/ShoppingView';

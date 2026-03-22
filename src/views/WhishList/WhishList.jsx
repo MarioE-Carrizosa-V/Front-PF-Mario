@@ -5,7 +5,6 @@ import Card from "../../components/Card/Card";
 
 const WhishList = () => {
   const list = useSelector((state) => state.whishList);
-  const counter = useSelector((state) => state.counter);
 
   return (
     <div>

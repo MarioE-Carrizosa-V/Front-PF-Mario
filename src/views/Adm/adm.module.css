@@ -73,7 +73,7 @@ display:block;
 width:250px;
 }
 
-.main_menu li>a {
+.main_menu li>a, .main_menu li>button.nav_button {
 position:relative;
 display:table;
 border-collapse:collapse;
@@ -84,7 +84,20 @@ font-size: 14px;
 text-decoration:none;
 -webkit-transition:all .1s linear;
 transition:all .1s linear;
-  
+}
+
+.nav_button {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.main_menu li:hover>a, .main_menu li:hover>button.nav_button {
+  color:#ffffff;
+  background-color:#ff0000;
 }
 
 .main_menu .nav-icon {
