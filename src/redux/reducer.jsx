@@ -459,7 +459,6 @@ const rootReducer = (state = initialState, action) => {
 
     case act.MANDARREVIEW:
       const game = action.payload;
-      console.log(game);
       return {
         ...state,
         review: game,

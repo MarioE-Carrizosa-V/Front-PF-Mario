@@ -715,7 +715,6 @@ export const getMyGames = (id) => {
 };
 
 export const getGameReview = (game) => {
-  console.log(game);
   return (dispatch) => {
     return dispatch({
       type: GETGAMEREVIEW,

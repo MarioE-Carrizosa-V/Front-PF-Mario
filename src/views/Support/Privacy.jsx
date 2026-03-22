@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from './SupportPage.module.css';
+import useDocumentTitle from "../../utils/useDocumentTitle";
 
 const Privacy = () => {
+    useDocumentTitle("AnimeZone - Privacidad");
     return (
         <div className={styles.container}>
             <div className={styles.content}>

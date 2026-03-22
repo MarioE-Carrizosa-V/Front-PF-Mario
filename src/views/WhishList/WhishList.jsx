@@ -2,8 +2,10 @@ import React from "react";
 import styles from "./WhishList.module.css";
 import { useSelector } from "react-redux";
 import Card from "../../components/Card/Card";
+import useDocumentTitle from "../../utils/useDocumentTitle";
 
 const WhishList = () => {
+  useDocumentTitle("AnimeZone - Mi Biblioteca");
   const list = useSelector((state) => state.whishList);
 
   return (

@@ -8,8 +8,10 @@ import * as act from "../../redux/actions";
 import { faSearchengin } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router-dom";
+import useDocumentTitle from "../../utils/useDocumentTitle";
 
 const Home = () => {
+  useDocumentTitle("AnimeZone - Explorar Animes");
   const history = useHistory();
   const dispatch = useDispatch();
   const gameOffer = useSelector((state) => state.gameOffer);

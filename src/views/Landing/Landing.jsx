@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Landing.module.css";
 import logoImage from "../../assets/AnimeZoneLogo.png";
+import useDocumentTitle from "../../utils/useDocumentTitle";
 
 const Landing = () => {
+  useDocumentTitle("AnimeZone - Bienvenido");
   return (
     <div className={styles.container}>
       <img src={logoImage} alt="AnimeZone" className={styles.logo} />

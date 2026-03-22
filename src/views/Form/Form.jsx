@@ -7,8 +7,10 @@ import Swal from "sweetalert2";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import LogoBackground from "../../assets/AnimeZoneLogo.png";
+import useDocumentTitle from "../../utils/useDocumentTitle";
 
 const Form = () => {
+  useDocumentTitle("AnimeZone - Iniciar Sesión");
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -60,7 +62,6 @@ const Form = () => {
           <GoogleLogin
             onSuccess={continueGoogle}
             onError={() => {
-              console.log("Google Login Failed");
               Swal.fire("Error", "El inicio de sesión con Google falló.", "error");
             }}
             useOneTap

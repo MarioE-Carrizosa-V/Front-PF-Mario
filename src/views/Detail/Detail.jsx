@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearDetail, gameDetail } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
@@ -15,13 +15,14 @@ import {
   FaInfoCircle,
   FaCheckCircle,
 } from "react-icons/fa";
+import useDocumentTitle from "../../utils/useDocumentTitle";
 
 const Detail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const game = useSelector((state) => state.gameDetail);
-  // const user = useSelector((state) => state.user) || JSON.parse(localStorage.getItem("user"));
-  // const isPremium = isSubscriptionValid(user);
+  useDocumentTitle(game ? `AnimeZone - ${game.name}` : "AnimeZone - Detalle");
+  const [translatedDesc, setTranslatedDesc] = useState("");
   const isLoading = game === undefined || game === null;
   const id = props.match.params.id;
 
@@ -33,6 +34,24 @@ const Detail = (props) => {
       dispatch(clearDetail());
     };
   }, [dispatch, id]);
+
+  useEffect(() => {
+    if (game?.detailed_description) {
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=es&dt=t&q=${encodeURI(game.detailed_description)}`;
+
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          // The API returns a nested array; we join the parts
+          const translation = data[0].map((item) => item[0]).join("");
+          setTranslatedDesc(translation);
+        })
+        .catch((err) => {
+          console.error("Translation error:", err);
+          setTranslatedDesc(game.detailed_description);
+        });
+    }
+  }, [game?.detailed_description]);
 
   const handleAdd = () => {
     dispatch(act.clearCart());
@@ -113,26 +132,36 @@ const Detail = (props) => {
           <div className={style.infoGlass}>
             <div className={style.headerLabels}>
               <span className={style.statusLabel}>
-                <FaCheckCircle /> {game.status === "Finished" ? "Finalizado" : game.status || "Finalizado"}
+                <FaCheckCircle />{" "}
+                {game.status === "Finished"
+                  ? "Finalizado"
+                  : game.status || "Finalizado"}
               </span>
               <span className={style.typeLabel}>
-                <FaTv /> {game.type === "TV" ? "Serie TV" : game.type || "Serie TV"}
+                <FaTv />{" "}
+                {game.type === "TV" ? "Serie TV" : game.type || "Serie TV"}
               </span>
             </div>
 
             <h1 className={style.title}>{game.name}</h1>
 
             <div className={style.ratingRow}>
-              <Rating rating={game.rating} />
-              <span className={style.scoreText}>
-                {game.rating || "N/A"} Puntos
-              </span>
-              <span className={style.episodesCount}>
-                {game.episodes || "?"} Episodios
-              </span>
+              {typeof game.rating === "number" && (
+                <Rating rating={game.rating} />
+              )}
+              {typeof game.rating === "number" && (
+                <span className={style.scoreText}>{game.rating} Puntos</span>
+              )}
+              {game.episodes > 0 && (
+                <span className={style.episodesCount}>
+                  {game.episodes} Episodios
+                </span>
+              )}
             </div>
 
-            <p className={style.synopsis}>{game.detailed_description}</p>
+            <p className={style.synopsis}>
+              {translatedDesc || game.detailed_description}
+            </p>
 
             <div className={style.desktopActions}>
               <button onClick={handleAdd} className={style.primaryBtn}>

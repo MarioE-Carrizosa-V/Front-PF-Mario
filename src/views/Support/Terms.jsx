@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from './SupportPage.module.css';
+import useDocumentTitle from "../../utils/useDocumentTitle";
 
 const Terms = () => {
+    useDocumentTitle("AnimeZone - Términos");
     return (
         <div className={styles.container}>
             <div className={styles.content}>

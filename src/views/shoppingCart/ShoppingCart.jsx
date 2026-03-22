@@ -6,10 +6,12 @@ import * as act from "../../redux/actions";
 import { isSubscriptionValid } from "../../utils/subscriptionUtils";
 import styles from "./ShoppingCart.module.css";
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import useDocumentTitle from "../../utils/useDocumentTitle";
 
 //* las cards que vengan del home...
 //! revisar la convergencia
 const ShoppingCart = () => {
+  useDocumentTitle("AnimeZone - Premium");
   const history = useHistory();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
