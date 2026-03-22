@@ -55,7 +55,6 @@ const Footer = () => {
             <ul>
               <li><a href="/terminos">Términos</a></li>
               <li><a href="/privacidad">Privacidad</a></li>
-              <li><a href="/cookies">Cookies</a></li>
             </ul>
           </div>
         </div>
