@@ -2,41 +2,54 @@
     color: white;
   }
 
-.container{
-    min-height: 100vh;
-    display: flex;
-    justify-content: space-around;
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
-.juegosContainer{
-    margin: 10px ;
-    display: flex;
-    border-radius: 10px;
-    width: 50%;
-    justify-content: space-around;
-    background-color: #2E2E2E;
+.juegosContainer {
+  margin: 20px 0;
+  display: flex;
+  width: 90%;
+  max-width: 1200px;
+  justify-content: center;
+  background-color: transparent;
 }
 
 .cajitaItems {
-    display: flex;
-    background-color: #202020;
-    margin: 10px 0;
-    border-radius: 10px;
-    width: 95%;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    box-sizing: border-box;
-    list-style-type: none;
-    padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  width: 100%;
+  background-color: transparent;
+  list-style-type: none;
+  padding: 0;
 }
 
-.li{
-    margin: 10px 0;
+.li {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .emptyCart {
-    padding: 20px;
-    border-radius: 4px;
-    color: white;
+  padding: 20px;
+  border-radius: 4px;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
   }
+  .cajitaItems {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+  }
+  .titleCarrito {
+    font-size: 1.5rem;
+  }
+}

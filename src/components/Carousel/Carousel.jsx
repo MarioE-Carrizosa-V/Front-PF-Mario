@@ -78,7 +78,7 @@ const handlePrevCard = useCallback(() => {
 
   return (
     <div className={style.container}>
-      <h2 className={style.principaltitle}>Upcoming Anime</h2>
+      <h2 className={style.principaltitle}>Próximos Animes</h2>
       <div className={style.containerimage}>
         {currentCharacters.map((character, index) => (
           <div

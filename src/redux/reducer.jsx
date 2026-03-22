@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 import * as act from "./actions";
 
 const initialState = {
-  games: [],
+  games: null,
   search: [],
   searchcopy: [],
   total: 0,
@@ -16,8 +16,7 @@ const initialState = {
   gamesNewReleases: null,
   gamesFiltered: null,
   createAccount: [],
-  user: null,
-  // userGoogle : null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
   orderCreated: false,
   error: null,
   gamesPlatforms: [],
@@ -34,22 +33,18 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    // ... [existing filters]
-    //filtros combinadosconst combtype = "COMBTYPE"
-
-    //filtros de busqueda
-
-    case act.FILTER_LANGUAGES:
+    case act.FILTER_LANGUAGES: {
       const language = action.payload.toLowerCase();
-      const filteredSearchsssssssss = state.search.filter(
+      const filteredSearch = state.search.filter(
         (game) =>
           game.supported_languages &&
           game.supported_languages.toLowerCase().includes(language),
       );
       return {
         ...state,
-        search: filteredSearchsssssssss,
+        search: filteredSearch,
       };
+    }
 
     case act.FILTER_GENRES:
       const tag = action.payload;
@@ -61,10 +56,10 @@ const rootReducer = (state = initialState, action) => {
         search: filteredAnimes,
       };
 
-    case act.FILTER_CATEGORIES:
+    case act.FILTER_CATEGORIES: {
       const category = action.payload;
 
-      const filteredSearchssssss = state.search.filter(
+      const filteredSearch = state.search.filter(
         (game) =>
           game.categories &&
           game.categories.some((categor) => categor.description === category),
@@ -72,8 +67,9 @@ const rootReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        search: filteredSearchssssss,
+        search: filteredSearch,
       };
+    }
 
     case act.FILTER_PLATFORMS:
       const type = action.payload; // Payload is now 'TV', 'MOVIE', etc.
@@ -85,23 +81,24 @@ const rootReducer = (state = initialState, action) => {
         search: filteredByType,
       };
 
-    case act.FILTER_FREE:
-      let filteredSearchsssss;
+    case act.FILTER_FREE: {
+      let filteredSearch;
       if (action.payload === "false") {
-        filteredSearchsssss = state.search.filter(
+        filteredSearch = state.search.filter(
           (game) =>
             game.is_free === true && game.release_date.coming_soon !== true,
         );
       } else {
-        filteredSearchsssss = state.search.filter(
+        filteredSearch = state.search.filter(
           (game) =>
             game.is_free === false && game.release_date.coming_soon !== true,
         );
       }
       return {
         ...state,
-        search: filteredSearchsssss,
+        search: filteredSearch,
       };
+    }
 
     case act.FILTER_TYPE:
       const typess = action.payload;
@@ -170,6 +167,12 @@ const rootReducer = (state = initialState, action) => {
         games: action.payload,
       };
 
+    case act.GET_MORE_GAMES:
+      return {
+        ...state,
+        games: [...state.games, ...action.payload],
+      };
+
     case act.GET_DETAIL:
       return {
         ...state,
@@ -219,7 +222,7 @@ const rootReducer = (state = initialState, action) => {
         Swal.fire({
           position: "center",
           icon: "warning",
-          title: "the game is already in the cart",
+          title: "El anime ya está en el carrito",
           showConfirmButton: false,
           timer: 2000,
         });
@@ -228,7 +231,7 @@ const rootReducer = (state = initialState, action) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Game added successfully",
+        title: "Anime añadido con éxito",
         showConfirmButton: false,
         timer: 2000,
       });
@@ -292,7 +295,7 @@ const rootReducer = (state = initialState, action) => {
         Swal.fire({
           position: "center",
           icon: "warning",
-          title: "the game is already in the list",
+          title: "El anime ya está en la lista",
           showConfirmButton: false,
           timer: 2000,
         });
@@ -301,7 +304,7 @@ const rootReducer = (state = initialState, action) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Game added successfully",
+        title: "Anime añadido con éxito",
         showConfirmButton: false,
         timer: 2000,
       });
@@ -465,9 +468,7 @@ const rootReducer = (state = initialState, action) => {
     case act.UPDATE_USER_SUBSCRIPTION:
       return {
         ...state,
-        user: state.user
-          ? { ...state.user, isPremium: action.payload }
-          : { isPremium: action.payload },
+        user: action.payload.updatedUser || state.user,
       };
 
     case act.DELETEREVIEW:
@@ -475,7 +476,7 @@ const rootReducer = (state = initialState, action) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Review removed successfuly",
+        title: "Reseña eliminada con éxito",
         showConfirmButton: false,
         timer: 2000,
       });

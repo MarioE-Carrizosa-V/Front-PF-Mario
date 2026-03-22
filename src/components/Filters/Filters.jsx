@@ -29,35 +29,35 @@ const Filters = () => {
   return (
     <>
       <select className={style.select}>
-        <option hidden>Platforms</option>
+        <option hidden>Plataformas</option>
         {platformFilter.map(({ platform, id }) => (
           <option key={id} value={platform} className={style.option}>{platform}</option>
         ))}
       </select>
 
       <select className={style.select}>
-        <option hidden>Languages</option>
+        <option hidden>Idiomas</option>
         {languagesFilter.map(({ language, id }) => (
           <option key={id} value={language} className={style.option}>{language}</option>
         ))}
       </select>
 
       <select className={style.select}>
-        <option hidden>Categories</option>
+        <option hidden>Categorías</option>
         {categoriesFilter.map(({ category, id }) => (
           <option key={id} value={category} className={style.option}>{category}</option>
         ))}
       </select>
 
       <select className={style.select}>
-        <option hidden>Developers</option>
+        <option hidden>Desarrolladores</option>
         {developersFilter.map(({ developer, id }) => (
           <option key={id} value={developer} className={style.option}>{developer}</option>
         ))}
       </select>
 
       <select className={style.select}>
-        <option hidden>Genres</option>
+        <option hidden>Géneros</option>
         {genresFilter.map(({ genre, id }) => (
           <option key={id} value={genre} className={style.option}>{genre}</option>
         ))}

@@ -98,3 +98,9 @@
     opacity: 1;
     pointer-events: auto;
   }
+
+  @media (max-width: 460px) {
+    .image {
+        width: 100%;
+    }
+  }

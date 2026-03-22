@@ -7,18 +7,72 @@
 }
 
 .container {
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding: 40px 20px;
 }
 
-.juegosContainer {
-  margin: 10px;
-  display: flex;
-  border-radius: 10px;
-  width: 50%;
-  justify-content: space-around;
-  background-color: #2e2e2e;
+.subscribeLink:hover {
+  text-decoration: none;
+}
+
+.premiumFocusActive {
+  text-align: center;
+  padding: 60px;
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 600px;
+  margin: 100px auto;
+}
+
+.premiumFocusActive h2 {
+  color: #c077d2;
+  margin-bottom: 20px;
+}
+
+.premiumFocusActive p {
+  color: #ccc;
+  margin-bottom: 30px;
+}
+
+.backButton {
+  background-image: linear-gradient(90deg, #7800a2 0%, #b906fa 74%);
+  border-radius: 20px;
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.backButton:hover {
+  transform: scale(1.05);
+}
+.subscriptionFocus {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+.triggerAlert {
+  background: rgba(105, 82, 109, 0.1);
+  border: 1px solid rgba(160, 100, 200, 0.3);
+  padding: 20px;
+  border-radius: 12px;
+  color: #eee;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.triggerAlert strong {
+  color: var(--color-purple-light);
+  font-weight: 700;
 }
 
 .cajitaItems {
@@ -42,26 +96,78 @@
 .cajitaResumen {
   display: flex;
   background-color: #121212;
-  flex-direction: column;
-  min-height: 400px;
-  width: 350px;
-  padding: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: auto;
+  max-width: 900px;
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  gap: 30px;
+}
+
+.checkoutForm {
+  flex: 1;
+  min-width: 300px;
+  background-color: #1a1a1a;
+  padding: 25px;
   border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid #333;
+}
+
+.checkoutTitle {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.inputGroup {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.input {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #69526d;
+}
+
+.validationMessage {
+  color: #ff4d4d;
+  font-size: 0.85rem;
   margin-top: 10px;
-  gap: 20px;
+  font-style: italic;
 }
 
 .premiumBox {
-  width: 100%;
+  flex: 1;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: linear-gradient(145deg, #1a1a1a 0%, #000000 100%);
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid var(--color-purple-dark);
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid #69526d;
 }
 
 .premiumTitle {
@@ -136,4 +242,15 @@
   color: var(--color-gray-dark);
   font-style: italic;
   font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .premiumFocusActive {
+    padding: 40px 20px;
+    margin: 40px 15px;
+  }
+  .cajitaResumen {
+    padding: 20px;
+    gap: 20px;
+  }
 }

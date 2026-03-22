@@ -37,28 +37,6 @@ function Dashboard() {
   const handleGameSubmit = (event) => {
     event.preventDefault();
     // Lógica para enviar os dados do formulário de criação de jogo
-    console.log('Dados do formulário de criação de jogo:', {
-      name,
-      type,
-      requiredAge,
-      isFree,
-      detailedDescription,
-      aboutTheGame,
-      shortDescription,
-      releaseDate,
-      comingSoon,
-      supportInfo,
-      metacritic,
-      priceOverview,
-      headerImage,
-      capsuleImage,
-      developers,
-      genres,
-      publishers,
-      platform,
-      languages,
-      categories
-    });
     // Limpar os campos do formulário após o envio
     setName('');
     setType('');
@@ -85,13 +63,6 @@ function Dashboard() {
   const handleUserSubmit = (event) => {
     event.preventDefault();
     // Lógica para enviar os dados do formulário de criação de usuário
-    console.log('Dados do formulário de criação de usuário:', {
-      userName,
-      email,
-      password,
-      confirmPassword,
-      role
-    });
     // Limpar os campos do formulário após o envio
     setUserName('');
     setEmail('');
@@ -100,67 +71,58 @@ function Dashboard() {
     setRole('user');
   };
 
-  // const handleCreateGameClick = () => {
-  //   setShowForm(true);
-  //   setShowUserForm(false);
-  // };
+  const handleCreateGameClick = (e) => {
+    e.preventDefault();
+    setShowForm(true);
+    setShowUserForm(false);
+  };
 
-  // const handleCreateUserClick = () => {
-  //   setShowUserForm(true);
-  //   setShowForm(false);
-  // };
+  const handleCreateUserClick = (e) => {
+    e.preventDefault();
+    setShowUserForm(true);
+    setShowForm(false);
+  };
 
   return (
-    <html>
-      <head></head>
-      <body>
-        <div className={styles.area}></div>
-        <nav className={styles.main_menu}>
-          {/* <ul>
-            <li>
-              <Link to="/home" className={styles.nav_link}>
-                <i className={`fa fa-home ${styles["fa-2x"]}`}></i>
-                <span className={styles.nav_text}>
-                  Home
-                </span>
-              </Link>
-            </li>
-            <li>
-              <a href="#" onClick={handleCreateGameClick}>
-                <i className={`fa fa-cogs ${styles["fa-2x"]}`}></i>
-                <span className={styles.nav_text}>
-                  Create Game
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#" onClick={handleCreateUserClick}>
-                <i className={`fa fa-user ${styles["fa-2x"]}`}></i>
-                <span className={styles.nav_text}>
-                  Create User
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i className={`fa fa-shopping-cart ${styles["fa-2x"]}`}></i>
-                <span className={styles.nav_text}>
-                  Sales
-                </span>
-              </a>
-            </li>
-          </ul> */}
-          <ul className="logout">
-            <li>
-              <Link to="/login">
-                <i className={`fa fa-power-off ${styles["fa-2x"]}`}></i>
-                <span className={styles.nav_text}>
-                  Logout
-                </span>
-              </Link>
-            </li>
-          </ul>
-        </nav>
+    <div className={styles.dashboardWrapper}>
+      <div className={styles.area}></div>
+      <nav className={styles.main_menu}>
+        <ul>
+          <li>
+            <Link to="/home" className={styles.nav_link}>
+              <i className={`fa fa-home ${styles["fa-2x"]}`}></i>
+              <span className={styles.nav_text}>Home</span>
+            </Link>
+          </li>
+          <li>
+            <a href="#" onClick={handleCreateGameClick}>
+              <i className={`fa fa-cogs ${styles["fa-2x"]}`}></i>
+              <span className={styles.nav_text}>Create Game</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" onClick={handleCreateUserClick}>
+              <i className={`fa fa-user ${styles["fa-2x"]}`}></i>
+              <span className={styles.nav_text}>Create User</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i className={`fa fa-shopping-cart ${styles["fa-2x"]}`}></i>
+              <span className={styles.nav_text}>Sales</span>
+            </a>
+          </li>
+        </ul>
+        <ul className={styles.logout}>
+          <li>
+            <Link to="/login">
+              <i className={`fa fa-power-off ${styles["fa-2x"]}`}></i>
+              <span className={styles.nav_text}>Logout</span>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+
 
         {showForm && (
           <div className={styles.cardContainer}>
@@ -168,57 +130,57 @@ function Dashboard() {
               <button className={styles.close} onClick={() => setShowForm(!showForm)}>X</button>
             </div>
             <div className={styles.form1}>
-              <h2>Product Creation</h2>
+              <h2>Creación de Producto</h2>
               <form onSubmit={handleGameSubmit}>
                 <label>
-                  Name Game:
+                  Nombre del Juego:
                   <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
                 </label>
 
                 <label>
-                  Type:
+                  Tipo:
                   <input type="text" value={type} onChange={(e) => setType(e.target.value)} />
                 </label>
 
                 <label>
-                  Required Age:
+                  Edad Requerida:
                   <input type="number" value={requiredAge} onChange={(e) => setRequiredAge(e.target.value)} />
                 </label>
 
                 <label>
-                  Is Free:
+                  Es Gratis:
                   <input type="text" value={isFree} onChange={(e) => setIsFree(e.target.value)} />
                 </label>
 
                 <label>
-                  Detailed Description:
+                  Descripción Detallada:
                   <textarea value={detailedDescription} onChange={(e) => setDetailedDescription(e.target.value)} />
                 </label>
 
                 <label>
-                  About the Game:
+                  Sobre el Juego:
                   <textarea value={aboutTheGame} onChange={(e) => setAboutTheGame(e.target.value)} />
                 </label>
 
                 <label>
-                  Short Description:
+                  Descripción Corta:
                   <textarea value={shortDescription} onChange={(e) => setShortDescription(e.target.value)} />
                 </label>
 
 
 
                 <label>
-                  Release Date:
+                  Fecha de Lanzamiento:
                   <input type="text" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} />
                 </label>
 
                 <label>
-                  Coming Soon:
+                  Próximamente:
                   <input type="text" value={comingSoon} onChange={(e) => setComingSoon(e.target.value)} />
                 </label>
 
                 <label>
-                  Support Info:
+                  Información de Soporte:
                   <textarea value={supportInfo} onChange={(e) => setSupportInfo(e.target.value)} />
                 </label>
 
@@ -228,45 +190,45 @@ function Dashboard() {
                 </label>
 
                 <label>
-                  Price Overview:
+                  Resumen de Precio:
                   <input type="text" value={priceOverview} onChange={(e) => setPriceOverview(e.target.value)} />
                 </label>
                 <label>
-                  Capsule Image:
+                  Imagen de Cápsula:
                   <input type="text" value={capsuleImage} onChange={(e) => setCapsuleImage(e.target.value)} />
                 </label>
 
                 <label>
-                  Developers:
+                  Desarrolladores:
                   <input type="text" value={developers} onChange={(e) => setDevelopers(e.target.value)} />
                 </label>
 
                 <label>
-                  Genres:
+                  Géneros:
                   <input type="text" value={genres} onChange={(e) => setGenres(e.target.value)} />
                 </label>
 
                 <label>
-                  Platform:
+                  Plataforma:
                   <input type="text" value={platform} onChange={(e) => setPlatform(e.target.value)} />
                 </label>
 
                 <label>
-                  Languages:
+                  Idiomas:
                   <input type="text" value={languages} onChange={(e) => setLanguages(e.target.value)} />
                 </label>
 
                 <label>
-                  Categories:
+                  Categorías:
                   <input type="text" value={categories} onChange={(e) => setCategories(e.target.value)} />
                 </label>
                 
                 <label>
-                  URL Image:
+                  URL de Imagen:
                   <input type="text" value={headerImage} onChange={(e) => setHeaderImage(e.target.value)} />
                 </label>
 
-                <input className={styles.button2} type="submit" value="Create Game" />
+                <input className={styles.button2} type="submit" value="Crear Juego" />
               </form>
             </div>
           </div>
@@ -278,7 +240,7 @@ function Dashboard() {
             <button className={styles.close} onClick={() => setShowUserForm(!showUserForm)}>X</button>
             </div>
             <div className={styles.form1}>
-              <h2>Create User</h2>
+              <h2>Crear Usuario</h2>
               <form onSubmit={handleUserSubmit}>
                 <label>
                   Name:
@@ -303,13 +265,12 @@ function Dashboard() {
                     <option value="admin">Admin</option>
                   </select>
                 </label>
-                <input className={styles.button2} type="submit" value="Register" />
+                <input className={styles.button2} type="submit" value="Registrar" />
               </form>
             </div>
           </div>
         )}
-      </body>
-    </html>
+    </div>
   );
 }
 

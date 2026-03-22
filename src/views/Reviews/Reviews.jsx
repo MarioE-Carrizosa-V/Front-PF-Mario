@@ -9,11 +9,7 @@ import Swal from "sweetalert2";
 const Review = () => {
   const gameRe = useSelector(state => state.review)
   const { id, name } = gameRe
-  console.log(gameRe);
-  console.log(name);
-  console.log(gameRe.name);
   const IDUser = JSON.parse(localStorage.getItem("user"));
-  console.log(IDUser.id);
   const [form, setForm] = useState({
     review: "",
     rating: 0,
@@ -34,7 +30,7 @@ const Review = () => {
     Swal.fire({
       position: "center",
       icon: "success",
-      title: "Review added successfully",
+      title: "Reseña añadida con éxito",
       showConfirmButton: false,
       timer: 2000
     })
@@ -68,7 +64,7 @@ const Review = () => {
     <div className={style.body_form}>
     <form onSubmit={handleSubmit}>
       <div className={style.total_container}>
-        <label className={style.review}>Review:</label>
+        <label className={style.review}>Reseña:</label>
         <textarea 
           name="review"
           value={form.review}
@@ -77,12 +73,12 @@ const Review = () => {
         />
       
       <div>
-        <label className={style.rating}>Rating:</label>
+        <label className={style.rating}>Calificación:</label>
         <div className={style.starContainer}>
           {renderStars()}
         </div>
       </div>
-      <button className={style.button} type="submit">Crear Review</button>
+      <button className={style.button} type="submit">Crear Reseña</button>
       </div>
     </form>
     </div>

@@ -25,12 +25,12 @@ const ShoppingView = () => {
       });
 
       if (response.status === 200) {
-        console.log(response.data); // URL de la imagen en Cloudinary
+        // Image uploaded successfully
       } else {
-        console.log(response.data); // Mensaje de error
+        // Handle error response
       }
     } catch (error) {
-      console.log(error.message);
+      // Handle network or other errors
     }
 
     setSelectedImage(null);

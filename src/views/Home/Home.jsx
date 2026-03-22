@@ -17,19 +17,22 @@ const Home = () => {
   const gamesTopSellers = useSelector((state) => state.gamesTopSellers);
   const games = useSelector((state) => state.games);
   const [name, setName] = useState("");
+  const [page, setPage] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   useEffect(() => {
     const fetchAllData = async () => {
       const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-      await dispatch(act.getGames());
-      await sleep(400);
+      dispatch(act.getGames());
+      
+      await sleep(500);
       await dispatch(act.getGamesOffer());
-      await sleep(400);
+      await sleep(500);
       await dispatch(act.getGamesNewReleases());
-      await sleep(400);
+      await sleep(500);
       await dispatch(act.getGamesComingSoon());
-      await sleep(400);
+      await sleep(500);
       await dispatch(act.getGamesTopSellers());
 
       dispatch(act.clearSearch());
@@ -56,17 +59,15 @@ const Home = () => {
     }
   };
 
+  const handleSeeMore = async () => {
+    setLoadingMore(true);
+    const nextPage = page + 1;
+    await dispatch(act.getMoreGames(20, nextPage));
+    setPage(nextPage);
+    setLoadingMore(false);
+  };
+
   const selectedGames = games;
-  console.log(
-    "DEBUG: Home current games state:",
-    selectedGames?.length,
-    selectedGames,
-  );
-  console.log("DEBUG: Home other sections:", {
-    gameOffer,
-    gamesNewReleases,
-    gamesTopSellers,
-  });
 
   return (
     <div className={style.homeContainer}>
@@ -75,7 +76,7 @@ const Home = () => {
         <div className={style.searchcontainer}>
           <input
             className={style.search}
-            placeholder="Search anime..."
+            placeholder="Buscar anime..."
             type="text"
             onChange={(e) => handleChange(e)}
             onKeyDown={handleKeyDown}
@@ -89,12 +90,22 @@ const Home = () => {
         </div>
       </div>
 
-      <HomeCarousel items={gamesTopSellers} title="Recommendations" />
-      <HomeCarousel items={gameOffer} title="Top Anime Movies" />
-      <HomeCarousel items={gamesNewReleases} title="Airing Now" />
+      <HomeCarousel items={gamesTopSellers} title="Recomendaciones" />
+      <HomeCarousel items={gameOffer} title="Principales Películas de Anime" />
+      <HomeCarousel items={gamesNewReleases} title="En Emisión" />
 
-      <h3 className={style.title}>All Animes</h3>
+      <h3 className={style.title}>Todos los Animes</h3>
       <CardsContainer gameComingSoon={selectedGames} />
+      
+      <div className={style.seeMoreContainer}>
+        <button 
+          className={style.seeMoreButton} 
+          onClick={handleSeeMore}
+          disabled={loadingMore}
+        >
+          {loadingMore ? "Cargando..." : "Ver más"}
+        </button>
+      </div>
     </div>
   );
 };

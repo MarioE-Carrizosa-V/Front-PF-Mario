@@ -1,4 +1,5 @@
 import axios from "axios";
+import { savePersistentSubscription } from "../utils/subscriptionUtils";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_TO_CART = "REMOVE_TO_CART";
 export const CLEAR_CART = "CLEAR_CART";
@@ -47,6 +48,7 @@ export const EDITCOUNTRY = "EDITCOUNTRY";
 export const EDIT_PROFILE_IMAGE = "EDIT_PROFILE_IMAGE";
 export const GETUSERSTORAGE = "GETUSERSTORAGE";
 export const GET_MYGAMES = "GET_MYGAMES";
+export const GET_MORE_GAMES = "GET_MORE_GAMES";
 
 export const GETGAMEREVIEW = "GETGAMEREVIEW";
 
@@ -55,7 +57,6 @@ export const MANDARREVIEW = "MANDARREVIEW";
 export const DELETEREVIEW = "DELETEREVIEW";
 
 export const mandarAReview = (game) => {
-  //console.log(game);
   return {
     type: MANDARREVIEW,
     payload: game,
@@ -103,10 +104,6 @@ const mapAnimeFull = (a) => ({
     ? a.streaming.map((s) => ({ name: s.name, url: s.url }))
     : [],
 });
-
-// const axiosInstance = axios.create({
-//   baseURL: ANIME_URL,
-// });
 
 export const resetfilters = () => {
   return {
@@ -170,7 +167,7 @@ export const filterfree = (payload) => {
 export const getGames = (limit = 20, page = 1) => {
   return async function (dispatch) {
     try {
-      const url = `${ANIME_URL}?limit=${limit}&page=${page}&order_by=mal_id&sort=desc`;
+      const url = `${ANIME_URL}?limit=${limit}&page=${page}&order_by=mal_id&sort=desc&start_date=2020-01-01&rating=pg13&sfw=true`;
       const response = await axios.get(url);
 
       if (!response.data || !response.data.data) {
@@ -189,6 +186,27 @@ export const getGames = (limit = 20, page = 1) => {
   };
 };
 
+export const getMoreGames = (limit = 20, page = 1) => {
+  return async function (dispatch) {
+    try {
+      const url = `${ANIME_URL}?limit=${limit}&page=${page}&order_by=mal_id&sort=desc&start_date=2020-01-01&rating=pg13&sfw=true`;
+      const response = await axios.get(url);
+
+      if (!response.data || !response.data.data) {
+        return;
+      }
+
+      const animes = response.data.data.map(mapAnime);
+
+      dispatch({
+        type: GET_MORE_GAMES,
+        payload: animes,
+      });
+    } catch (error) {
+    }
+  };
+};
+
 export const gameDetail = (id) => {
   return async function (dispatch) {
     try {
@@ -201,21 +219,10 @@ export const gameDetail = (id) => {
         payload: anime,
       });
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 };
-
-// export const preload = () => {
-//     return async (dispatch) => {
-//         try {
-//             await axios.get('http://localhost:3001/preload');
-//             console.log("base de datos cargada")
-//         } catch (error) {
-//         dispatch(console.log(error));
-//         }
-//     };
-// };
 
 export const getAnimeSearch = (filters = {}) => {
   return async function (dispatch) {
@@ -243,7 +250,6 @@ export const getAnimeSearch = (filters = {}) => {
         payload: animes,
       });
     } catch (error) {
-      console.log("Error in getAnimeSearch:", error.message);
     }
   };
 };
@@ -272,19 +278,14 @@ export const getGamesOffer = () => {
     try {
       // Top Anime Movies
       const url = `${JIKAN_BASE_URL}/top/anime?type=movie&limit=10`;
-      console.log("DEBUG: getGamesOffer calling:", url);
       const response = await axios.get(url);
-      console.log(
-        "DEBUG: getGamesOffer data count:",
-        response.data.data?.length,
-      );
       const animes = response.data.data.map(mapAnime);
       dispatch({
         type: GET_GAMES_OFFER,
         payload: animes,
       });
     } catch (error) {
-      console.log("ERROR in getGamesOffer:", error.message);
+      // console.log("ERROR in getGamesOffer:", error.message);
     }
   };
 };
@@ -294,13 +295,8 @@ export const getGamesComingSoon = () => {
     try {
       // Direct Top Anime Upcoming fetch
       const url = `${JIKAN_BASE_URL}/top/anime?filter=upcoming&limit=10`;
-      console.log("DEBUG: getGamesComingSoon calling:", url);
 
       const response = await axios.get(url);
-      console.log(
-        "DEBUG: getGamesComingSoon data:",
-        response.data.data?.length,
-      );
 
       const animes = response.data.data.map(mapAnime);
 
@@ -309,7 +305,7 @@ export const getGamesComingSoon = () => {
         payload: animes,
       });
     } catch (error) {
-      console.log("ERROR in getGamesComingSoon:", error.message);
+      // console.log("ERROR in getGamesComingSoon:", error.message);
     }
   };
 };
@@ -320,13 +316,8 @@ export const getRecommendations = (limit = 10) => {
       // /recommendations/anime doesn't support 'limit' as a direct query param in many versions/wrappers
       // but it does return a list of recommendations
       const url = `${JIKAN_BASE_URL}/recommendations/anime`;
-      console.log("DEBUG: getRecommendations calling:", url);
 
       const response = await axios.get(url);
-      console.log(
-        "DEBUG: getRecommendations data:",
-        response.data.data?.length,
-      );
 
       // Flatten recommendations: each item has an 'entry' array with 2 animes
       const flattenedAnimes = [];
@@ -340,7 +331,7 @@ export const getRecommendations = (limit = 10) => {
       });
       return flattenedAnimes.slice(0, limit);
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       return [];
     }
   };
@@ -357,7 +348,7 @@ export const getGamesTopSellers = () => {
         payload: animes,
       });
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 };
@@ -379,7 +370,7 @@ export const getGamesNewReleases = () => {
         payload: animes,
       });
     } catch (error) {
-      console.log("ERROR in getGamesNewReleases:", error.message);
+      // console.log("ERROR in getGamesNewReleases:", error.message);
     }
   };
 };
@@ -395,7 +386,6 @@ export const addCart = (game) => {
 };
 
 export const removeCart = (id) => {
-  //console.log(id);
   return {
     type: REMOVE_TO_CART,
     payload: id,
@@ -445,7 +435,6 @@ export const createOrderFailure = (errorMessage) => {
 
 export const addWhishList = (game) => {
   return function (dispatch) {
-    //console.log(game);
     dispatch({
       type: ADD_TO_WHISH_LIST,
       payload: game,
@@ -468,13 +457,12 @@ export const postCreateUser = (props) => {
   return async function (dispatch) {
     try {
       const user = await axios.post("crearCuenta", props);
-      console.log(user.props);
       return dispatch({
         type: CREATE_USER,
         payload: user.props,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };
@@ -504,12 +492,11 @@ export const logoutUser = () => {
   return async function (dispatch) {
     try {
       const logout = axios.post("cerrarSesion");
-      console.log(logout);
       return dispatch({
         type: LOGOUT_USER,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };
@@ -524,7 +511,7 @@ export const loginGoogle = (googleUser) => {
         payload: googleUser,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };
@@ -550,7 +537,7 @@ export const getDataGoogle = () => {
         throw new Error("Authentication has failed!");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };
@@ -558,13 +545,12 @@ export const getDataGoogle = () => {
 export const logoutGoogle = () => {
   return async (dispatch) => {
     try {
-      const logoutTwo = await window.open("/auth/logout", "_self");
-      console.log(logoutTwo);
+      await axios.get("/auth/logout");
       return dispatch({
         type: LOGOUT_USERGOOGLE,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };
@@ -587,7 +573,7 @@ export const platformsAll = () => {
         payload: types.map((t) => ({ id: t, name: t })),
       });
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 };
@@ -644,7 +630,7 @@ export const genresGames = () => {
         payload: tags.map((t) => ({ id: t, name: t, description: t })), // keeping description for reducer compatibility
       });
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 };
@@ -665,7 +651,7 @@ export const editName = (id, newName) => {
         payload: response.data,
       });
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 };
@@ -680,7 +666,7 @@ export const editUserName = (id, newUserName) => {
         payload: response.data,
       });
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 };
@@ -695,33 +681,10 @@ export const editCountry = (id, newCountry) => {
         payload: response.data,
       });
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 };
-
-//   export const editProfileImage = () => {
-//     return async function () {
-//         try {
-//             const formData = new FormData();
-//             formData.append('file', selectedImage);
-//             const response = await axios.post('http://localhost:3001/upload', formData, {
-//               headers: {
-//                 'Content-Type': 'multipart/form-data',
-//                 datosUser: JSON.stringify(datosUser.id),
-//               },
-//             });
-
-//             if (response.status === 200) {
-//               console.log(response.data); // URL de la imagen en Cloudinary
-//             } else {
-//               console.log(response.data); // Mensaje de error
-//             }
-//           } catch (error) {
-//             console.log(error.message);
-//           }
-//     }
-// };
 
 export const getUserStorage = (id) => {
   const endpoint = `/profile/${id}`;
@@ -734,20 +697,6 @@ export const getUserStorage = (id) => {
   };
 };
 
-// export const getGameReview = (id) => {
-
-//     const endpoint = `/reviewsDemo/${id}`;
-
-//     return async (dispatch) => {
-//         const {data} = await axios.get(endpoint);
-//         return dispatch({
-//             type: GETGAMEREVIEW,
-//             payload: data
-//         })
-//     }
-
-// }
-
 //? ACCIONES DE MI BIBLIOTECA
 
 export const getMyGames = (id) => {
@@ -759,7 +708,6 @@ export const getMyGames = (id) => {
         type: GET_MYGAMES,
         payload: games.Games,
       });
-      //console.log(games.Games);
     } catch (error) {
       console.error(error.message);
     }
@@ -793,8 +741,24 @@ export const getDeleteReview = (idRev) => {
   };
 };
 export const updateUserSubscription = (status) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  let updatedUser = user;
+  if (user) {
+    updatedUser = { 
+      ...user, 
+      isPremium: status, 
+      subscriptionDate: status ? new Date().toISOString() : null 
+    };
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    
+    // Also save to persistent storage keyed by email
+    const email = updatedUser.email || updatedUser.id;
+    if (email) {
+      savePersistentSubscription(email, status);
+    }
+  }
   return {
     type: UPDATE_USER_SUBSCRIPTION,
-    payload: status,
+    payload: { status, updatedUser },
   };
 };

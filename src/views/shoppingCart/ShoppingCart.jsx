@@ -1,7 +1,9 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import * as act from "../../redux/actions";
+import { isSubscriptionValid } from "../../utils/subscriptionUtils";
 import Card from "../../components/Card/Card";
 import styles from "./ShoppingCart.module.css";
 import { PayPalButtons } from "@paypal/react-paypal-js";
@@ -9,96 +11,134 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 //* las cards que vengan del home...
 //! revisar la convergencia
 const ShoppingCart = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user) || JSON.parse(localStorage.getItem("user")) || {};
+  const isPremium = isSubscriptionValid(user);
   const totalPrice = useSelector((state) => state.total);
-  //console.log(cart);
-  // const wholePart = Math.floor(totalPrice / 100);
-  // const partDecimal = (totalPrice % 100).toString().padStart(2, '0');
-  // const formattedTotalPrice = parseFloat(`${wholePart}.${partDecimal}`);
-  // const dataUser = JSON.parse(localStorage.getItem("user"));
-  //console.log(dataUser);
+
+  const [checkoutData, setCheckoutData] = React.useState({
+    name: user.name || "",
+    email: user.email || "",
+  });
+
+  React.useEffect(() => {
+    if (user.name || user.email) {
+      setCheckoutData({
+        name: user.name || "",
+        email: user.email || "",
+      });
+    }
+  }, [user]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCheckoutData({ ...checkoutData, [name]: value });
+  };
+
+  const isCheckoutValid = checkoutData.name && checkoutData.email;
 
   const handleRemove = () => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esto!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Sí, ¡eliminar!",
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Deleted!", "Your cart has been deleted.", "success");
+        Swal.fire("¡Eliminado!", "Tu carrito ha sido vaciado.", "success");
         dispatch(act.clearCart());
       }
     });
   };
 
-  // const handleBuy = async () => {
-  //   try {
-  //     //! mandar tanto juegos como el precio total
-  //     dispatch(act.createOrder(totalPrice, cart, dataUser));
-  //   } catch (error) {
-  //     console.error(error.message);
-  //   }
-  // };
+  if (isPremium) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.premiumFocusActive}>
+          <h2>✨ Ya eres Miembro ALFA PREMIUM</h2>
+          <p>Tu suscripción está activa y tienes acceso total al catálogo.</p>
+          <button className={styles.backButton} onClick={() => history.push("/home")}>
+            Ir al Catálogo
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
       <br />
-      <h2 className={styles.titleCarrito}>My Watchlist & Subscription</h2>
+      <h2 className={styles.titleCarrito}>Finalizar Suscripción</h2>
       <br />
       <div className={styles.container}>
-        <div className={styles.juegosContainer}>
-          <div className={styles.cajitaItems}>
-            {cart.length === 0 ? (
-              <div className={styles.emptyCart}>
-                <p> Your watchlist is currently empty...</p>
-              </div>
-            ) : (
-              cart.map((game) => (
-                <li className={styles.li} key={game.id}>
-                  <Card
-                    id={game.id}
-                    name={game.name}
-                    image={game.image}
-                    price={game.price}
-                  />
-                </li>
-              ))
-            )}
-          </div>
+        <div className={styles.subscriptionFocus}>
           {cart.length > 0 && (
-            <button className={styles.botonBorrar} onClick={handleRemove}>
-              Clear Watchlist
-            </button>
+            <div className={styles.triggerAlert}>
+              <p>
+                Te estás suscribiendo para disfrutar de <strong>{cart[0].name}</strong> y todo el catálogo premium de AnimeZone.
+              </p>
+            </div>
           )}
         </div>
 
         <div className={styles.cajitaResumen}>
+          <div className={styles.checkoutForm}>
+            <h3 className={styles.checkoutTitle}>Datos de Finalización</h3>
+            <div className={styles.inputGroup}>
+              <label htmlFor="name">Nombre Completo</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Ej. Juan Pérez"
+                value={checkoutData.name}
+                onChange={handleInputChange}
+                className={styles.input}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <label htmlFor="email">Correo Electrónico</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="ejemplo@correo.com"
+                value={checkoutData.email}
+                onChange={handleInputChange}
+                className={styles.input}
+              />
+            </div>
+            {!isCheckoutValid && cart.length > 0 && (
+              <p className={styles.validationMessage}>
+                Por favor, completa tus datos para habilitar el pago.
+              </p>
+            )}
+          </div>
+
           <div className={styles.premiumBox}>
             <h3 className={styles.premiumTitle}>ALFA PREMIUM</h3>
-            <p className={styles.premiumPrice}>$9.99 / MONTH</p>
+            <p className={styles.premiumPrice}>$9.99 / MES</p>
             <ul className={styles.benefits}>
-              <li>✨ No Ads</li>
-              <li>✨ Full Library Access</li>
-              <li>✨ High Definition Stream</li>
-              <li>✨ Offline Viewing</li>
+              <li>✨ Sin Anuncios</li>
+              <li>✨ Acceso Total a la Biblioteca</li>
+              <li>✨ Streaming en Alta Definición</li>
+              <li>✨ Visualización sin Conexión</li>
             </ul>
             <div className={styles.paymentButton}>
               <PayPalButtons
+                disabled={!isCheckoutValid}
                 style={{
                   layout: "vertical",
                   shape: "rect",
                   label: "subscribe",
                 }}
                 createOrder={(data, actions) => {
-                  /* 
-                    NOTE: To use real subscriptions, you MUST create a Plan in your PayPal Dashboard 
-                    and use its ID here. For this demo, we'll use a transaction that simulates it.
-                  */
                   return actions.order.create({
                     purchase_units: [
                       {
@@ -106,7 +146,7 @@ const ShoppingCart = () => {
                           currency_code: "USD",
                           value: "9.99",
                         },
-                        description: "AnimeZone Premium Monthly Subscription",
+                        description: `Suscripción Mensual AnimeZone Premium - ${checkoutData.name}`,
                       },
                     ],
                   });
@@ -115,8 +155,8 @@ const ShoppingCart = () => {
                   return actions.order.capture().then((details) => {
                     const name = details.payer.name.given_name;
                     Swal.fire({
-                      title: `Welcome, ${name}!`,
-                      text: "You are now an ALFA PREMIUM member. Enjoy the best anime!",
+                      title: `¡Bienvenido, ${name}!`,
+                      text: "Ya eres miembro de ALFA PREMIUM. ¡Disfruta del mejor anime!",
                       icon: "success",
                       confirmButtonColor: "#69526d",
                     });
@@ -125,10 +165,10 @@ const ShoppingCart = () => {
                   });
                 }}
                 onError={(err) => {
-                  console.error("PayPal Error:", err);
+                  console.error("Error de PayPal:", err);
                   Swal.fire(
                     "Error",
-                    "Transaction could not be completed.",
+                    "No se pudo completar la transacción.",
                     "error",
                   );
                 }}
@@ -136,31 +176,7 @@ const ShoppingCart = () => {
             </div>
           </div>
 
-          {totalPrice > 0 && (
-            <div className={styles.totalBox}>
-              <h4>Total Purchase: ${totalPrice.toFixed(2)}</h4>
-              <PayPalButtons
-                style={{ layout: "horizontal", height: 45 }}
-                createOrder={(data, actions) => {
-                  return actions.order.create({
-                    purchase_units: [
-                      {
-                        amount: {
-                          value: totalPrice.toString(),
-                        },
-                      },
-                    ],
-                  });
-                }}
-                onApprove={(data, actions) => {
-                  return actions.order.capture().then(() => {
-                    Swal.fire("Success!", "Purchase completed!", "success");
-                    dispatch(act.clearCart());
-                  });
-                }}
-              />
-            </div>
-          )}
+          {/* Removed item-based total price box */}
         </div>
       </div>
     </div>

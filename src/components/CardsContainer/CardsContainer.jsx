@@ -5,9 +5,9 @@ import styles from "./CardsContainer.module.css";
 const CardsContainer = (props) => {
   const { gameComingSoon } = props;
   if (gameComingSoon === null) {
-    return <p>Loading...</p>;
+    return <p>Cargando...</p>;
   } else if (!Array.isArray(gameComingSoon)) {
-    return <p>Invalid data</p>;
+    return <p>Datos inválidos</p>;
   } else {
     const uniqueGames = gameComingSoon;
 

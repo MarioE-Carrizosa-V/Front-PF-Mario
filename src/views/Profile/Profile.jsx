@@ -32,13 +32,13 @@ const Profile = (props) => { // Agrega props como parámetro
             <li>
               <div onClick={() => setActiveOption("profile")}>
                 <i className={`fa fa-home ${styles["fa-2x"]}`}></i>
-                <span className={styles.nav_text}>Profile</span>
+                <span className={styles.nav_text}>Perfil</span>
               </div>
             </li>
             <li className="has subnav">
               <a href="/library" onClick={() => setActiveOption("shopping")}>
                 <i className={`fa fa-gamepad ${styles["fa-2x"]}`}></i>
-                <span className={styles.nav_text}>MyGames</span>
+                <span className={styles.nav_text}>Mis Animes</span>
               </a>
             </li>
             {/* <li className="has-subnav">
@@ -53,7 +53,7 @@ const Profile = (props) => { // Agrega props como parámetro
             <li>
               <Link to="/form">
                 <i className={`fa fa-power-off ${styles["fa-2x"]}`}></i>
-                <span className={styles.nav_text}>Logout</span>
+                <span className={styles.nav_text}>Cerrar Sesión</span>
               </Link>
             </li>
           </ul>

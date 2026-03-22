@@ -85,7 +85,7 @@ const Search = () => {
         <div className={style.searchcontainer}>
           <input
             className={style.search}
-            placeholder="Search anime..."
+            placeholder="Buscar anime..."
             type="text"
             value={filters.q}
             onChange={handleSearchChange}
@@ -103,85 +103,85 @@ const Search = () => {
       <div className={style.searchyfilters}>
         <aside className={style.filters}>
           <button className={style.reset} onClick={resetFilters}>
-            Reset Filters
+            Restablecer Filtros
           </button>
 
           <div className={style.option}>
-            <h3>Type:</h3>
+            <h3>Tipo:</h3>
             <select
               name="type"
               value={filters.type}
               onChange={handleFilterChange}
             >
-              <option value="">All Types</option>
-              <option value="tv">TV</option>
-              <option value="movie">Movie</option>
+              <option value="">Todos los Tipos</option>
+              <option value="tv">Serie TV</option>
+              <option value="movie">Película</option>
               <option value="ova">OVA</option>
-              <option value="special">Special</option>
+              <option value="special">Especial</option>
               <option value="ona">ONA</option>
-              <option value="music">Music</option>
+              <option value="music">Música</option>
             </select>
           </div>
 
           <div className={style.option}>
-            <h3>Status:</h3>
+            <h3>Estado:</h3>
             <select
               name="status"
               value={filters.status}
               onChange={handleFilterChange}
             >
-              <option value="">All Status</option>
-              <option value="airing">Airing</option>
-              <option value="complete">Complete</option>
-              <option value="upcoming">Upcoming</option>
+              <option value="">Todos los Estados</option>
+              <option value="airing">En Emisión</option>
+              <option value="complete">Finalizado</option>
+              <option value="upcoming">Próximamente</option>
             </select>
           </div>
 
           <div className={style.option}>
-            <h3>Rating:</h3>
+            <h3>Clasificación:</h3>
             <select
               name="rating"
               value={filters.rating}
               onChange={handleFilterChange}
             >
-              <option value="">All Ratings</option>
-              <option value="g">G - All Ages</option>
-              <option value="pg">PG - Children</option>
-              <option value="pg13">PG-13 - Teens</option>
+              <option value="">Todas las Clasificaciones</option>
+              <option value="g">G - Para todos los públicos</option>
+              <option value="pg">PG - Niños</option>
+              <option value="pg13">PG-13 - Adolescentes</option>
               <option value="r17">R - 17+</option>
-              <option value="r">R+ - Mild Nudity</option>
+              <option value="r">R+ - Desnudez leve</option>
             </select>
           </div>
 
           <div className={style.option}>
-            <h3>Order By:</h3>
+            <h3>Ordenar Por:</h3>
             <select
               name="order_by"
               value={filters.order_by}
               onChange={handleFilterChange}
             >
-              <option value="popularity">Popularity</option>
-              <option value="score">Score</option>
-              <option value="rank">Rank</option>
-              <option value="title">Title</option>
-              <option value="start_date">Release Date</option>
+              <option value="popularity">Popularidad</option>
+              <option value="score">Puntuación</option>
+              <option value="rank">Rango</option>
+              <option value="title">Título</option>
+              <option value="start_date">Fecha de Estreno</option>
             </select>
           </div>
 
           <div className={style.option}>
-            <h3>Sort:</h3>
+            <h3>Orden:</h3>
             <select
               name="sort"
               value={filters.sort}
               onChange={handleFilterChange}
             >
-              <option value="desc">Descending</option>
-              <option value="asc">Ascending</option>
+              <option value="desc">Descendente</option>
+              <option value="asc">Ascendente</option>
             </select>
           </div>
 
           <div className={style.option}>
-            <h3>Min Score:</h3>
+            <h3>Pun. Mínima:</h3>
             <input
               type="number"
               name="min_score"
@@ -202,7 +202,7 @@ const Search = () => {
                 checked={filters.sfw}
                 onChange={handleFilterChange}
               />
-              SFW (Safe for Work)
+              SFW (Seguro para el trabajo)
             </label>
             <label className={style.checkboxLabel}>
               <input
@@ -211,7 +211,7 @@ const Search = () => {
                 checked={filters.unapproved}
                 onChange={handleFilterChange}
               />
-              Show Unapproved
+              Mostrar No Aprobados
             </label>
           </div>
         </aside>
@@ -236,7 +236,7 @@ const Search = () => {
                 </>
               ) : (
                 <div className={style.noResults}>
-                  <p>No animes found with current filters.</p>
+                  <p>No se encontraron animes con los filtros actuales.</p>
                 </div>
               )}
             </>

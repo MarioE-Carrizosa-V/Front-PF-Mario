@@ -12,9 +12,6 @@ const ReviewsModif = ({ match }) => {
 
   const gameRe = useSelector(state => state.review)
  
-  console.log("IIIIIIIIIIIDDDDDDDDDDD",id);
-  console.log("REEEEEEEEE",gameRe);
-
   // const IDUser = JSON.parse(localStorage.getItem("user"));
 
   const [form, setForm] = useState({
@@ -38,7 +35,7 @@ const ReviewsModif = ({ match }) => {
     Swal.fire({
       position: "center",
       icon: "success",
-      title: "editado",
+      title: "Editado con éxito",
       showConfirmButton: false,
       timer: 2000
   })
@@ -70,13 +67,11 @@ const ReviewsModif = ({ match }) => {
       return stars;
     };
     
-    console.log("gamereeeeeeeeeeee", gameRe);
-
     return (
       <div className={style.body_form}>
     <form onSubmit={handleSubmit}>
       <div className={style.total_container}>
-        <label className={style.review}>Review:</label>
+        <label className={style.review}>Reseña:</label>
         <textarea 
           name="review"
           value={form.review}
@@ -85,12 +80,12 @@ const ReviewsModif = ({ match }) => {
         />
       
       <div>
-        <label className={style.rating}>Rating:</label>
+        <label className={style.rating}>Calificación:</label>
         <div className={style.starContainer}>
           {renderStars()}
         </div>
       </div>
-      <button className={style.button} type="submit">Editar Review</button>
+      <button className={style.button} type="submit">Editar Reseña</button>
       </div>
     </form>
     </div>

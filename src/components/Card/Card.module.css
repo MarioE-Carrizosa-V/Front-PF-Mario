@@ -5,8 +5,10 @@
   position: relative;
   overflow: hidden;
   border-radius: 12px;
-  width: 220px;
-  min-height: 400px;
+  width: 100%;
+  max-width: 280px;
+  min-height: 380px;
+  margin: 0 auto;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -37,7 +39,7 @@
 .imagecontainer {
   position: relative;
   width: 100%;
-  height: 300px;
+  aspect-ratio: 2/3;
   overflow: hidden;
 }
 
@@ -157,4 +159,21 @@
   padding: 5px 10px;
   border-radius: 10px;
   cursor: pointer;
+}
+@media (max-width: 600px) {
+  .box {
+    min-height: 300px;
+  }
+  .name {
+    font-size: 14px !important;
+    padding: 20px 8px 8px;
+  }
+  .buttoncontainer {
+    padding: 8px;
+    gap: 8px;
+  }
+  .button, .buttonadd {
+    font-size: 10px;
+    padding: 8px 4px;
+  }
 }

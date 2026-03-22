@@ -14,7 +14,6 @@ const Form = () => {
 
   const continueGoogle = async (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
-    console.log("Decoded Google Profile:", decoded);
 
     // Store in localStorage for persistence
     const googleUser = {
@@ -41,7 +40,7 @@ const Form = () => {
 
     Toast.fire({
       icon: "success",
-      title: `Welcome, ${decoded.name}!`,
+      title: `¡Bienvenido, ${decoded.name}!`,
     });
 
     await dispatch(loginGoogle(googleUser));
@@ -56,13 +55,13 @@ const Form = () => {
           alt="AnimeZone"
           className={styles.loginLogo}
         />
-        <h2 className={styles.loginTitle}>Welcome to AnimeZone</h2>
+        <h2 className={styles.loginTitle}>Bienvenido a AnimeZone</h2>
         <div className={styles.googleBtnContainer}>
           <GoogleLogin
             onSuccess={continueGoogle}
             onError={() => {
               console.log("Google Login Failed");
-              Swal.fire("Error", "Google login failed.", "error");
+              Swal.fire("Error", "El inicio de sesión con Google falló.", "error");
             }}
             useOneTap
             theme="filled_black"

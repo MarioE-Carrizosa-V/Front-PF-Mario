@@ -8,12 +8,12 @@ const Landing = () => {
     <div className={styles.container}>
       <img src={logoImage} alt="AnimeZone" className={styles.logo} />
       <Link to="/home">
-        <button className={styles.button}>start</button>
+        <button className={styles.button}>empezar</button>
       </Link>
       <p className={styles.subHeading}>
-        Discover the excitement in AnimeZone. Get the best anime series and
-        movies in our online store. Dive into unforgettable adventures and
-        challenge your skills!
+        Descubre la emoción en AnimeZone. Obtén las mejores series y películas
+        de anime en nuestra tienda online. ¡Sumérgete en aventuras inolvidables
+        y desafía tus habilidades!
       </p>
     </div>
   );

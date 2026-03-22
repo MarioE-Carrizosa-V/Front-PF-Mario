@@ -6,6 +6,7 @@ import style from "./Card.module.css";
 import { useHistory } from "react-router-dom";
 import favoriteIcon from "../../assets/favorite.svg";
 import favoriteFullIcon from "../../assets/favoriteFull.svg";
+import { isSubscriptionValid } from "../../utils/subscriptionUtils";
 
 const Card = (props) => {
   let { id, price, name, image, appid } = props;
@@ -17,6 +18,10 @@ const Card = (props) => {
   const history = useHistory();
   const isShoppCartRoute = location.pathname === "/cart";
   const whishList = useSelector((state) => state.whishList) || [];
+  const userRedux = useSelector((state) => state.user);
+  const userLocal = JSON.parse(localStorage.getItem("user")) || {};
+  const user = userRedux || userLocal;
+  const isPremium = isSubscriptionValid(user);
   const isWhishlistArea = whishList.some((item) => item.id === (id || appid));
   const isWhishListRoute = location.pathname === "/whishlist";
   // const wholePart = Math.floor(price / 100);
@@ -24,7 +29,9 @@ const Card = (props) => {
   // const formattedNumber = parseFloat(`${wholePart}.${partDecimal}`);
 
   const handleAdd = () => {
+    dispatch(act.clearCart());
     dispatch(act.addCart({ id, price: price, name, image }));
+    history.push("/cart");
   };
 
   const handleAddWhish = () => {
@@ -66,7 +73,7 @@ const Card = (props) => {
           handleClick(id || appid);
         }}
       >
-        <div className={style.premiumBadge}>Premium</div>
+        {!isPremium && <div className={style.premiumBadge}>Premium</div>}
         <img className={style.image} src={image} alt={name}></img>
         <h1 ref={titleRef} className={style.name}>
           {name}
@@ -76,7 +83,7 @@ const Card = (props) => {
         <div className={style.buttoncontainer}>
           <img
             src={isWhishlistArea ? favoriteFullIcon : favoriteIcon}
-            alt={isWhishlistArea ? "Remove from Watchlist" : "Add to Watchlist"}
+            alt={isWhishlistArea ? "Eliminar de Favoritos" : "Añadir a Favoritos"}
             className={style.favoriteIcon}
             onClick={(e) => {
               e.stopPropagation(); // Prevent clicking the card
@@ -87,16 +94,17 @@ const Card = (props) => {
               }
             }}
             title={
-              isWhishlistArea ? "Remove from Watchlist" : "Add to Watchlist"
+              isWhishlistArea ? "Eliminar de Favoritos" : "Añadir a Favoritos"
             }
           />
           <button
             className={style.buttonadd}
-            onClick={() => {
-              handleAdd();
+            onClick={(e) => {
+              e.stopPropagation();
+              isPremium ? handleClick(id || appid) : handleAdd();
             }}
           >
-            Subscribe to Watch
+            {isPremium ? "¡A disfrutar!" : "Suscribirse para Ver"}
           </button>
         </div>
       )}
@@ -104,11 +112,12 @@ const Card = (props) => {
         <div className={style.buttoncontainer}>
           <button
             className={style.buttonadd}
-            onClick={() => {
-              handleAdd();
+            onClick={(e) => {
+              e.stopPropagation();
+              isPremium ? handleClick(id || appid) : handleAdd();
             }}
           >
-            Subscribe to Watch
+            {isPremium ? "¡A disfrutar!" : "Suscribirse para Ver"}
           </button>
           <button
             className={style.botonBorrar}
@@ -116,7 +125,7 @@ const Card = (props) => {
               handelRemoveWhishList();
             }}
           >
-            Remove
+            Eliminar
           </button>
         </div>
       )}
@@ -128,7 +137,7 @@ const Card = (props) => {
               handleRemove();
             }}
           >
-            Remove
+            Eliminar
           </button>
         </div>
       )}

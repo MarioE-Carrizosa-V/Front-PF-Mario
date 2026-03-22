@@ -4,7 +4,7 @@ const ReviewsView = () => {
   return (
     <div>
       {/* Reviews view content */}
-      <h1>Reviews View</h1>
+      <h1>Vista de Reseñas</h1>
       {/* Add your reviews view content here */}
     </div>
   );
